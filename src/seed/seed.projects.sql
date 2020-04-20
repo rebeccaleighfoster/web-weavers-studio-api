@@ -5,7 +5,6 @@ INSERT INTO projects
 
 VALUES
   ( 1, 'title 1', 'description one', 'twill', 'cotton',  '3/2',  'wool' , '3/2', 12,  '1x2' , '5x6' , 1 );
-  
 
 
 COMMIT
