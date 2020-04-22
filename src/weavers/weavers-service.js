@@ -1,5 +1,3 @@
-
-
 const WeaversService = {
     getAllWeavers(knex) {
         return knex
@@ -7,7 +5,7 @@ const WeaversService = {
         .from('weavers')
     }
 }
-/*
+   /*
     insertWeaver(knex, newWeaver) {
         return knex
             .insert(newWeaver)
@@ -16,8 +14,8 @@ const WeaversService = {
             .then(rows => {
                 return rows[0]
             })
-    },
-    
+    }
+ 
     getById(knex, id) {
         return knex.from('weavers').select('*').where('id', id).first()
     },
