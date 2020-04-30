@@ -34,10 +34,9 @@ WeaversService.insertWeaver(
 });
 });
 
-weaversRouter.delete("/:weaver_id", (req, res, next) => {
+weaversRouter.delete("/", (req, res, next) => {
     WeaversService.deleteWeaver(
         req.app.get('db'),
-        req.params.weaver_id
     )
         .then(() => {
             res.status(204).end()
