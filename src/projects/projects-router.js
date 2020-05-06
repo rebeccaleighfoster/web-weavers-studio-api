@@ -14,57 +14,57 @@ projectsRouter.get("/", (req, res) => {
         });
 });
 
-projectsRouter.get("/:weaver_id", (req,res,) => {
+projectsRouter.get("/:weaver_id", (req, res, ) => {
     ProjectsService.getByWeaverId(
         req.app.get('db'),
         req.params.weaver_id,
     )
-    .then(weaversById => {
-        res.json(weaversById)
-    }
-    )
+        .then(weaversById => {
+            res.json(weaversById)
+        }
+        )
 });
 
-projectsRouter.get("/project/:project_id", (req,res,) => {
+projectsRouter.get("/project/:project_id", (req, res) => {
     ProjectsService.getByProjectId(
         req.app.get('db'),
         req.params.project_id,
     )
-    .then(projectById => {
-        res.json(projectById)
-    }
-    )
+        .then(projectById => {
+            res.json(projectById)
+        }
+        )
 });
 
 
 projectsRouter.post("/", (req, res) => {
     const newProject = req.body;
-    console.log(newProject)
-    
+    console.log("MNP", newProject)
+
     // for (const [key, value] of Object.entries(newWeaver))
     // if (value == null)
     //     return res.status(400).json({
     //         error: { message: `Missing '${key}' in request body` }
     //     })
-ProjectsService.insertProject(
-    req.app.get('db'),
-    newProject
-)
-.then(project => {
-    res.json(project)
-       
-})
-.catch((err) => {
-    res.json(err);
-});
+    ProjectsService.insertProject(
+        req.app.get('db'),
+        newProject
+    )
+        .then(project => {
+            res.json(project)
+
+        })
+        .catch((err) => {
+            console.log(err)
+            res.json(err);
+        });
 });
 
 
-projectsRouter.patch('/edit/:project_id',  (req, res) => {
+projectsRouter.patch('/edit/:project_id', (req, res) => {
     const updatedProject = req.body;
     delete updatedProject.id;
-    delete updatedProject.weaver_id;
-    console.log(updatedProject)
+    console.log(updatedProject, req.params.project_id)
     // const numberOfValues = Object.values(sightingToUpdate).filter(Boolean).length
     // if (numberOfValues === 0)
     //     return res.status(400).json({
@@ -74,12 +74,16 @@ projectsRouter.patch('/edit/:project_id',  (req, res) => {
     //     })
     ProjectsService.updateProjects(
         req.app.get('db'),
-        req.params.projects_id,
+        parseInt(req.params.project_id),
         updatedProject
     )
-    .then(updatedProject => {
-        res.json(updatedProject)
-})
+        .then(updatedProject => {
+            res.json(updatedProject)
+        })
+        .catch((err) => {
+            console.log(err)
+            res.json(err);
+        });
 });
 projectsRouter.delete("/:id", (req, res, next) => {
     ProjectsService.deleteProjects(

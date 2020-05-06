@@ -21,7 +21,12 @@ const WeaversService = {
                 return rows[0]
             })
     },
-
+    getOneWeaverByID(knex, weaver_id){
+        return knex('weavers')
+            .where({ id: weaver_id})
+            .first()
+    
+    },
 }
 
 /*

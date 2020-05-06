@@ -13,25 +13,37 @@ weaversRouter.get("/", (req, res) => {
             res.json(err);
         });
 });
+
+weaversRouter.get('/weaver/:weaver_id', (req, res) => {
+    WeaversService.getOneWeaverByID(
+        req.app.get('db'),
+        req.params.weaver_id,
+    )
+        .then(weaverById => {
+            res.json(weaverById
+            )
+        })
+    })
+
 weaversRouter.post("/", (req, res) => {
     const newWeaver = req.body;
-    
+    console.log(newWeaver)
     for (const [key, value] of Object.entries(newWeaver))
-    if (value == null)
-        return res.status(400).json({
-            error: { message: `Missing '${key}' in request body` }
+        if (value == null)
+            return res.status(400).json({
+                error: { message: `Missing '${key}' in request body` }
+            })
+    WeaversService.insertWeaver(
+        req.app.get('db'),
+        newWeaver
+    )
+        .then(weaver => {
+            res.json(weaver)
+
         })
-WeaversService.insertWeaver(
-    req.app.get('db'),
-    newWeaver
-)
-.then(weaver => {
-    res.json(weaver)
-       
-})
-.catch((err) => {
-    res.json(err);
-});
+        .catch((err) => {
+            res.json(err);
+        });
 });
 
 weaversRouter.delete("/", (req, res, next) => {

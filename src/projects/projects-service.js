@@ -21,7 +21,7 @@ getByWeaverId(knex, weaver_id) {
 insertProject(knex, newProject) {
     return knex
         .insert(newProject)
-        .into('project')
+        .into('projects')
         .returning('*')
         .then(rows => {
             return rows[0]
