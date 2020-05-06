@@ -36,6 +36,7 @@ getByProjectId(knex, project_id){
 
 },
 
+
 updateProjects(knex, id, newProjectFields) {
     return knex('projects')
         .where({ id })
