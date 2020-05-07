@@ -16,5 +16,5 @@ module.exports = {
   database: DATABASE_NAME,
   username: DATABASE_USER,
   password: DATABASE_PASSWORD,
- // ssl: true
+  ssl: process.env.NODE_ENV === "production"
 };
