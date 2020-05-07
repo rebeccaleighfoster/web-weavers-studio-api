@@ -8,6 +8,12 @@ const {
   DATABASE_PASSWORD
 } = process.env;
 
+console.log(DATABASE_HOST,
+  DATABASE_PORT,
+  DATABASE_NAME,
+  DATABASE_USER,
+  DATABASE_PASSWORD);
+
 module.exports = {
   migrationDirectory: __dirname + "/migrations",
   driver: "pg",
@@ -16,5 +22,5 @@ module.exports = {
   database: DATABASE_NAME,
   username: DATABASE_USER,
   password: DATABASE_PASSWORD,
-  ssl: process.env.NODE_ENV === "production"
+  ssl: true
 };
