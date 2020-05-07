@@ -10,7 +10,8 @@ CREATE TABLE projects (
     weft_material TEXT NOT NULL,
     weft_size VARCHAR,
     sett INTEGER NOT NULL,
+    ppi INTEGER,
     size_on_loom VARCHAR,
     size_off_loom VARCHAR,
-    weaver_id INTEGER REFERENCES weavers(id) ON DELETE CASCADE NOT NULL
+    weaver_id INTEGER NOT NULL
 )
