@@ -1,18 +1,19 @@
-require('dotenv').config();
-
 const {
   DATABASE_HOST,
   DATABASE_PORT,
   DATABASE_NAME,
   DATABASE_USER,
-  DATABASE_PASSWORD
-} = process.env;
+  DATABASE_PASSWORD,
+  NODE_ENV
+} = require("./src/config");
 
 console.log(DATABASE_HOST,
   DATABASE_PORT,
   DATABASE_NAME,
   DATABASE_USER,
   DATABASE_PASSWORD);
+
+
 
 module.exports = {
   migrationDirectory: __dirname + "/migrations",
@@ -22,5 +23,6 @@ module.exports = {
   database: DATABASE_NAME,
   username: DATABASE_USER,
   password: DATABASE_PASSWORD,
-  ssl: true
+  validateChecksums: false,
+  ssl: NODE_ENV !== "development"
 };

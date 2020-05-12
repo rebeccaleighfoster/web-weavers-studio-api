@@ -5,7 +5,6 @@ CREATE TABLE weavers (
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
         email VARCHAR,
-        password VARCHAR,
         experience_level TEXT NOT NULL,
         loom_type TEXT NOT NULL,
         state TEXT NOT NULL,
