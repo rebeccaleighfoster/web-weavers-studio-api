@@ -39,7 +39,7 @@ projectsRouter.get("/project/:project_id", (req, res) => {
 
 projectsRouter.post("/", (req, res) => {
     const newProject = req.body;
-    console.log( newProject)
+    console.log(newProject)
 
     for (const [key, value] of Object.entries(newProject))
     if (value == null)
@@ -65,13 +65,7 @@ projectsRouter.patch('/edit/:project_id', (req, res) => {
     const updatedProject = req.body;
     delete updatedProject.id;
     console.log(updatedProject, req.params.project_id)
-    // const numberOfValues = Object.values(sightingToUpdate).filter(Boolean).length
-    // if (numberOfValues === 0)
-    //     return res.status(400).json({
-    //         error: {
-    //             message: `Request body must contain 'title', 'species', 'brief_description', 'detailed_description', 'sighting_date', or 'sighting_location'`
-    //         }
-    //     })
+
     ProjectsService.updateProjects(
         req.app.get('db'),
         parseInt(req.params.project_id),
