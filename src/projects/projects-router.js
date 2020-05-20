@@ -41,11 +41,11 @@ projectsRouter.post("/", (req, res) => {
     const newProject = req.body;
     console.log("MNP", newProject)
 
-    // for (const [key, value] of Object.entries(newWeaver))
-    // if (value == null)
-    //     return res.status(400).json({
-    //         error: { message: `Missing '${key}' in request body` }
-    //     })
+    for (const [key, value] of Object.entries(newWeaver))
+    if (value == null)
+        return res.status(400).json({
+            error: { message: `Missing '${key}' in request body` }
+        })
     ProjectsService.insertProject(
         req.app.get('db'),
         newProject

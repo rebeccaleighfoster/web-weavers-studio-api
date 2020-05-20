@@ -20,8 +20,7 @@ weaversRouter.get('/weaver/:weaver_id', (req, res) => {
         req.params.weaver_id,
     )
         .then(weaverById => {
-            res.json(weaverById
-            )
+            res.json(weaverById)
         })
     })
 

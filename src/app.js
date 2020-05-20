@@ -9,8 +9,6 @@ const weaversRouter = require('./weavers/weavers-router')
 const bodyParser = require('body-parser')
 const projectsRouter = require('./projects/projects-router')
 
-//const projectsRouter = require('./projects/projects-router')
-
 const app = express()
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
@@ -18,13 +16,21 @@ const morganOption = (NODE_ENV === 'production')
 
 app.use(morgan(morganOption))
 app.use(helmet())
-app.use(cors())
 
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  // intercept OPTIONS method
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  }
+  else {
+    next();
+  }
+};
+
+app.use(allowCrossDomain);
 
 app.use(
     bodyParser.urlencoded({
