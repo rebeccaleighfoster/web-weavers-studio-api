@@ -5,7 +5,7 @@ const {
   DATABASE_PORT,
   DATABASE_NAME,
   DATABASE_USER,
-  DATABASE_PASSWORD
+  DATABASE_PASSWORD,
 } = process.env;
 
 module.exports = {
@@ -17,5 +17,6 @@ module.exports = {
   PORT: process.env.PORT || 4000,
   NODE_ENV: process.env.NODE_ENV || "development",
   DATABASE_URL:
-    process.env.DATABASE_URL || "postgresql://dunder_mifflin@localhost/web-weavers-studio"
+    process.env.DATABASE_URL ||
+    "postgresql://dunder_mifflin@localhost/web-weavers-studio",
 };
