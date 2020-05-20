@@ -39,9 +39,9 @@ projectsRouter.get("/project/:project_id", (req, res) => {
 
 projectsRouter.post("/", (req, res) => {
     const newProject = req.body;
-    console.log("MNP", newProject)
+    console.log( newProject)
 
-    for (const [key, value] of Object.entries(newWeaver))
+    for (const [key, value] of Object.entries(newProject))
     if (value == null)
         return res.status(400).json({
             error: { message: `Missing '${key}' in request body` }
