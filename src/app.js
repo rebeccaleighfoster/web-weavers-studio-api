@@ -43,7 +43,7 @@ app.use("/weavers", weaversRouter);
 app.use("/projects", projectsRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello, world! weavers");
+  res.send("Hello, world!");
 });
 
 app.use(function errorHandler(error, req, res, next) {

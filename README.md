@@ -1,26 +1,190 @@
-# Express Boilerplate!
+# Web Weavers Studio
+https://web-weavers-studio-app.now.sh/
 
-This is a boilerplate project used for starting new projects!
+## Summary
 
-## Set up
+Web Weavers Studio is a fullstack CRUD app that provides users with the opportunity to create and maintain a list of weaving projects. Users can track data on their personal projects along with seeing data on other's projects.
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Motivation
+ 
+Handweaving is a craft that has been passed down by women and men in in person studios and homes for generations. As the people start aging out of the craft, the app intends tor replace some of the in person knowledge sharing by providing users with quick data on projects. Additionally, keeping track of data on personal projects can be daunting as well, so having one place to log projects will simplify notetaking.
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+## API Endpoints
+This CRUD app has several endpoints. The get endpoints include one that returns all the weavers' information, one that returns an individual weaver's information, one that returns all the projects in the database, and one that returns all the projects that a specific weaver has logged. The post end points enable users to create an account, or add a project. The users can also update their project information with a patch endpoint and delete a project with a delete endpoint. 
 
-## Scripts
+## Languages/Frameworks Utilized
 
-Start the application `npm start`
+* [React](https://reactjs.org/)
+* [Javascript](https://www.javascript.com/)
+* [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
+* [Node](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 
-Start nodemon for the application `npm run dev`
+## API Documentation
 
-Run the tests `npm test`
+### Images Endpoints
 
-## Deploying
+### ▸ `GET /api/images`
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.# express-boilerplate
+Returns an array of image posts that were submitted within a specified distance of the queried latitude and longitude. If there are no submissions within the query parameters, then the server makes a call to the Google Places API and returns an array of up to 20 images of businesses in the area.
+
+**Sample query**
+
+```URL
+/api/images/?sort={SORTBY}&lat={LATITUDE}&lon={LONGITUDE}&distance={DISTANCE}
+```
+
+- <small>`{SORTBY}`</small> - either **new**, where the response is ordered by timestamp, or **top**, where the response is ordered by the number of karma (i.e. upvotes)
+- <small>`{LATITUDE}`</small> - the latitude of the query location, which can be provided by the HTML5 Geolocation API
+- <small>`{LONGITUDE}`</small> - the longitude of the query location, which can be provided by the HTML5 Geolocation API
+- <small>`{DISTANCE}`</small> - the distance in kilometers within the query location to find image posts. If not included in the query, the distance defaults to 20km.
+
+**Example response**
+
+```JSON
+[
+  {
+    "id": 42,
+    "image_text": "amazing waterslide across the street!",
+    "image_url": "https://anonygram-images.s3.amazonaws.com/58f5951ccc35f88f3594172657d81f31",
+    "karma_total": 3,
+    "latitude": "51.482",
+    "longitude": "-0.007",
+    "user_id": "7ad87401-dda8-48f0-8ed8-a6bc9756e53c",
+    "create_timestamp": "2019-12-12T17:58:03.868Z",
+  }
+]
+```
+
+- **`id`**`- string` - uuid of an image post
+- **`image_text`**`- string` - the description, flavor text, or caption of an image post
+- **`image_url`**`- string` - URL of where the image is hosted on Anonygram's S3 server
+- **`karma_total`**`- integer` - the number of upvotes that an image post has
+- **`latitude`**`- float` - latitude of the image post's location **\***
+- **`longitude`**`- float` - longitude of the image post's location **\***
+- **`user_id`**`- string` - uuid of the user that submitted the image post (returns _null_ if it is an anonymous post from an unregistered user)
+- **`create_timestamp`**`- string` - timestamp in ISO format denoting when the post was submitted
+
+> \* _note that latitude and longitude are truncated to 3 decimal places to maintain anonymity_
+
+### ▸ `POST /api/images`
+
+A typical image submission is made via a <small>POST</small> request using the `multipart/form-data` encoding type in a form submit. The uploaded file must have a file extension of either `jpeg, jpg, png, gif`. The server compresses the transmitted data to JPEG format, auto-rotates it based on the image's EXIF metadata (i.e. if the image were taken in portrait mode on an iPhone), and then stores the image on Anonygram's S3 server. The resulting URL that points to the asset on S3 is stored as a field in the images table within Anonygram's database.
+
+If the user making the image submission is registered and logged in, their `user_id` is stored with the image in the database. This allows the user to delete their submission later, which is documented in the <small>DELETE</small> request below.
+
+**Example request**
+
+```JavaScript
+{
+  body: {
+    image_text: 'amazing waterslide across the street!',
+    latitude: '51.4825766',
+    longitude: '-0.0076589'
+  },
+  user: {
+    id: '7ad87401-dda8-48f0-8ed8-a6bc9756e53c',
+    username: 'admin',
+    password: '$2a$12$WtU7R79oJnrqDqVpGlDSyuvk5ELkkrk8uOZ3ki6CkRlP.SP6p6G8y',
+    karma_balance: 25
+  },
+  file: {
+    fieldname: 'someImage',
+    originalname: 'waterslide.png',
+    encoding: '7bit',
+    mimetype: 'image/png',
+    destination: 'uploads/',
+    filename: '58f5951ccc35f88f3594172657d81f31',
+    path: 'uploads\\58f5951ccc35f88f3594172657d81f31',
+    size: 141628
+  }
+}
+```
+
+> _A successful <small>POST</small> requires a **latitude**, **longitude**, and the **image file** itself. Latitude and longitude can be provided by the HTML5 Geolocation API._
+
+> _The submitted image must meet community guidelines and will be rejected with a status `400` if questionable content is detected by the Google Vision API._
+
+### ▸ `PATCH /api/images/:submission_id`
+
+This endpoint upvotes an image submission specified by `submission_id`, by incrementing the image's `karma_total` by 1. The upvoter must be a registered and logged in user with a positive `karma_balance`. Additionally, the submission's `user_id` must match the upvoter's `id`, otherwise the server responds with a status `403` (i.e. users may not upvote their own submissions).
+
+If no submission could be found by `submission_id`, the server responds with a status `400`.
+
+### ▸ `DELETE /api/images/:submission_id`
+
+This endpoint allows a registered and logged in user to remove an image that they posted from the database, specified by `submission_id`. If the `id` of the user making the <small>DELETE</small> request does not match the `user_id` of the submission, the server responds with a status `401`.
+
+If no submission could be found by `submission_id`, the server responds with a status `400`.
+
+### Comments Endpoints
+
+### ▸ `GET /api/comments/:submission_id`
+
+Returns an array of comments associated with an image submission specified by `submission_id`. Every comment contains a `user_id` of the user that posted the comment, but the displayed username is randomly generated on the client to maintain anonymity.
+
+If no submission could be found by `submission_id`, the server responds with a status `404`.
+
+**Example response**
+
+```JSON
+[
+  {
+    "comment_id": "fcf3fa7b-a1ca-4314-bbd5-5dba75ba5991",
+    "comment_text": "wow that's wild!",
+    "comment_timestamp": "2019-12-12T23:32:14.876Z",
+    "submission_id": 42,
+    "user_id": "7ad87401-dda8-48f0-8ed8-a6bc9756e53c"
+  }
+]
+```
+
+- **`comment_id`**`- string` - uuid of a comment
+- **`comment_text`**`- string` - the contents of a posted comment
+- **`comment_timestamp`**`- string` - timestamp in ISO format denoting when the comment was created
+- **`submission_id`**`- integer` - the id of an image submission that the comment was posted to
+- **`user_id`**`- string` - uuid of the user that posted the comment
+
+### ▸ `POST /api/comments/:submission_id`
+
+This endpoint allows a registered and logged in user to post a comment to an image submission specified by `submission_id`.
+
+If no submission could be found by `submission_id`, the server responds with a status `404`.
+
+**Example request**
+
+```JSON
+{
+  "user_id": "7ad87401-dda8-48f0-8ed8-a6bc9756e53c",
+  "comment_text": "wow that's wild!"
+}
+```
+
+### Users Endpoints
+
+### ▸ `GET /api/users/:user_id`
+
+Returns the data for the user specified by `user_id`.
+
+If no user could be found by `user_id`, the server responds with a status `400`.
+
+**Example response**
+
+```JSON
+{
+  "id": "7ad87401-dda8-48f0-8ed8-a6bc9756e53c",
+  "karma_balance": 25
+}
+```
+
+> _The **karma_balance** (i.e. the number of remaining upvotes that a user has) of each registered user in the Anonygram database is reset to 25 every hour, whether or not any karma was spent in that hour._
+
+> _Note that the `username` of the specified user is not included in the response so as to maintain anonymity._
+
+
+## Live App
+[Web Weavers Studio](https://web-weavers-studio-app.now.sh/)
+
+## Client Repository
+[Web Weavers Studio](https://github.com/rebeccaleighfoster/web-weavers-studio)
