@@ -1,6 +1,4 @@
 # Web Weavers Studio
-https://web-weavers-studio-app.now.sh/
-
 ## Summary
 
 Web Weavers Studio is a fullstack CRUD app that provides users with the opportunity to create and maintain a list of weaving projects. Users can track data on their personal projects along with seeing data on other's projects.
@@ -25,17 +23,15 @@ This CRUD app has several endpoints. The get endpoints include one that returns 
 
 # Weavers
 Returns all weaver profiles
-* URL
-/weavers
-* Method
-```
-GET
-```
-* URL Params
+* URL `/weavers`
+
+* Method `GET`
+* URL Params:
 None
-* Data Params
+* Data Params:
 None
-* Success Response
+* Success Response:
+```
     Code: 200
     Content:{ 
         "id": 1,
@@ -47,20 +43,17 @@ None
         "state": "Minnesota",
         "bio": "Sarah is a weaver"
     }
-
+```
 # Add New Weaver
 Edits existing weaver profile
-* URL
-/weaver
-* Method
-```
-POST
-```
+* URL `/weaver`
+* Method `POST`
 * URL Params
 weaver_id=[integer]
 * Data Params
 None
 * Success Response:
+```
     Code: 204
     Content: { { 
         "id": 2,
@@ -72,39 +65,34 @@ None
         "state": "Minnesota",
         "bio": "Rebecca is a weaver"
     } }
-
+```
     
-# Delete Weaver
+### Delete Weaver
 Deletes existing weaver profile
-* URL
-/weaver
-* Method
-```
-DELETE
-```
+* URL `/weaver`
+* Method `DELETE`
 * URL Params
 weaver_id=[integer]
 * Data Params
 None
 * Success Response:
+```
     Code: 204
     Content: none
+```
 
-# Get One Weaver
+### Get One Weaver
 Get one weaver
 
-* URL
-/weavers/:weaver_id
+* URL `/weavers/:weaver_id`
 
-* Method
-```
-GET
-```
+* Method `GET`
 * URL Params
 None
 * Data Params
 None
 * Success Response
+```
     Code: 200
     Content:{ 
         "id": 1,
@@ -116,9 +104,9 @@ None
         "state": "Minnesota",
         "bio": "Sarah is a weaver"
     }
+```
 
-
-# Projects
+### Projects
 Returns all projects
 * URL
 /projects
@@ -150,20 +138,17 @@ None
       }
     }
 
-# Return one project
+### Return one project
 Returns one project
-* URL
-/projects/project/:project_id
-* Method
-```
-GET
-```
+* URL `/projects/project/:project_id`
+* Method  `GET`
 * URL Params
 project_id=[integer]
 * Data Params
 None
 * Success Response
     Code: 200
+  ```
     Content:{ 
         {
         id: 2,
@@ -181,21 +166,19 @@ None
         weaver_id: 3,
       }
     }
+    ```
 
 
-# Get all projects by weaver
+### Get All Projects By Weaver
 Returns all projects by one specific weaver
-* URL
-/projects/:weaver_id
-* Method
-```
-GET
-```
+* URL `/projects/:weaver_id`
+* Method `GET`
 * URL Params
 weaver_id=[integer]
 * Data Params
 None
 * Success Response
+```
     Code: 200
     Content:{ 
         {
@@ -214,21 +197,18 @@ None
         weaver_id: 3,
       }
     }
+```
 
-
- # Add a New Project
+ ### Add a New Project
 Add a new project to the database
-* URL
-/projects
-* Method
-```
-POST
-```
+* URL `/projects`
+* Method `POST`
 * URL Params
 None
 * Data Params
 None
 * Success Response
+```
     Code: 202
     Content:{ 
         {
@@ -247,15 +227,11 @@ None
         weaver_id: 3,
       }
     }
-
-# Edit project
-Edits and updates an existing project
-* URL
-/projects/edit/:project_id
-* Method
 ```
-PATCH
-```
+### Edit project
+Edits and Updates an Existing Project
+* URL `/projects/edit/:project_id`
+* Method: `PATCH`
 * URL Params
 project_id = [integer]
 * Data Params
@@ -264,13 +240,10 @@ None
     Code: 204 (No Content)
     }
 
-# Delete Project
-Deletes existing project
-/project/:id
-* Method
-```
-DELETE
-```
+### Delete Project
+Deletes Existing Project
+* URL `/project/:id`
+* Method `DELETE`
 * URL Params
 id=[integer]
 * Data Params
@@ -279,7 +252,7 @@ None
     Code: 204
     Content: none
 
-    
+
 ## Live App
 [Web Weavers Studio](https://web-weavers-studio-app.now.sh/)
 
