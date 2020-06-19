@@ -1,5 +1,4 @@
 const supertest = require("supertest");
-//const supertest =  require('supertest');
 const app = require("../src/app");
 const { expect } = require("chai");
 const knex = require('knex');
@@ -55,7 +54,6 @@ describe("GET /projects", () => {
 });
 
 describe(`POST /projects`, () => {
-  it(`creates a project, responding with 201 and the new project`, () => {
       const newProject= {
         id: 2,
         project_title: "test title",
@@ -71,80 +69,40 @@ describe(`POST /projects`, () => {
         size_off_loom: " test size off",
         weaver_id: 3,
       }
+      it(`creates a project, responding with 201 and the new project`, function (done)  {
       return supertest(app)
           .post('/projects')
           .send(newProject)
+          .post('/users')
+          .send(newProject)
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
           .expect(201)
-          .expect(res => {
-            expect(res.body.id).to.eql(newProject.id)
-              expect(res.body.project_title).to.eql(newProject.project_title)
-              expect(res.body.project_description).to.eql(newProject.project_description)
-              expect(res.body.weave_structure).to.eql(newProject.weave_structure)
-              expect(res.body.warp_material).to.eql(newProject.warp_material)
-              expect(res.body.weft_material).to.eql(newProject.weft_material)
-              expect(res.body.weft_size).to.eql(newProject.weft_size)
-              expect(res.body.sett).to.eql(newProject.sett)
-              expect(res.body.ppi).to.eql(newProject.ppi)
-              expect(res.body.size_on_loom).to.eql(newProject.size_on_loom)
-              expect(res.body.size_off_loom).to.eql(newProject.size_off_loom)
-              expect(res.body.weaver_id).to.eql(newProject.weaver_id)
-          })
-          .then(res => 
-              supertest(app)
-                  .get(`/projects/project/${res.body.project_id}`)
-                  .expect(res.body)
-          )
-  })
-})
-
-// //patch project
-// describe("Add a new project", () => {
-//   it("should create a new project", async () => {
-//     const res = await supertest(projects).post("/").send({
-//       id: 2,
-//       project_title: "Goldenrod",
-//       project_description: "Public-key empowering matrix",
-//       weave_structure: "Clothing",
-//       warp_material: "Dzongkha",
-//       warp_size: "8",
-//       weft_material: "fds",
-//       weft_size: "11",
-//       sett: 51,
-//       ppi: 12,
-//       size_on_loom: "NEW NEW ",
-//       size_off_loom: " NEW NEW NEW NEW plant",
-//       weaver_id: 2,
-//     });
-//     expect(res.statusCode).toEqual(201);
-//     expect(res.body).toHaveProperty("post");
-//   });
-// });
-// getAllProjects(knex) {
-//     return knex.select("*").from("projects");
-//   }, DONE
-
-//   deleteProjects(knex, id) {
-//     return knex("projects").where({ id }).delete();
-//   },
-
-//   getByWeaverId(knex, weaver_id) {
-//     return knex.from("projects").select("*").where("weaver_id", weaver_id);
-//   }, DONE
-
-//   insertProject(knex, newProject) {
-//     return knex
-//       .insert(newProject)
-//       .into("projects")
-//       .returning("*")
-//       .then((rows) => {
-//         return rows[0];
-//       });
-//   },
-
-//   getByProjectId(knex, project_id) {
-//     return knex("projects").where({ id: project_id }).first();
-//   }, DONE
-
-//   updateProjects(knex, id, newProjectFields) {
-//     return knex("projects").where({ id }).update(newProjectFields);
-//   },
+          .end((err) => {
+              if (err) return done(err);
+              done();
+          });
+        })
+      })
+  //         .expect(201)
+  //         .expect(res => {
+  //           expect(res.body.id).to.eql(newProject.id)
+  //             expect(res.body.project_title).to.eql(newProject.project_title)
+  //             expect(res.body.project_description).to.eql(newProject.project_description)
+  //             expect(res.body.weave_structure).to.eql(newProject.weave_structure)
+  //             expect(res.body.warp_material).to.eql(newProject.warp_material)
+  //             expect(res.body.weft_material).to.eql(newProject.weft_material)
+  //             expect(res.body.weft_size).to.eql(newProject.weft_size)
+  //             expect(res.body.sett).to.eql(newProject.sett)
+  //             expect(res.body.ppi).to.eql(newProject.ppi)
+  //             expect(res.body.size_on_loom).to.eql(newProject.size_on_loom)
+  //             expect(res.body.size_off_loom).to.eql(newProject.size_off_loom)
+  //             expect(res.body.weaver_id).to.eql(newProject.weaver_id)
+  //         })
+  //         .then(res => 
+  //             supertest(app)
+  //                 .get(`/projects/project/${res.body.project_id}`)
+  //                 .expect(res.body)
+  //         )
+  // })
+// })
