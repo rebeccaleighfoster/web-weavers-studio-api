@@ -48,10 +48,8 @@ None
 Edits existing weaver profile
 * URL `/weaver`
 * Method `POST`
-* URL Params
-weaver_id=[integer]
-* Data Params
-None
+* URL Params: `weaver_id=[integer]`
+* Data Params: `None`
 * Success Response:
 ```
     Code: 204
@@ -71,10 +69,8 @@ None
 Deletes existing weaver profile
 * URL `/weaver`
 * Method `DELETE`
-* URL Params
-weaver_id=[integer]
-* Data Params
-None
+* URL Params: `weaver_id=[integer]`
+* Data Params: None
 * Success Response:
 ```
     Code: 204
@@ -87,10 +83,8 @@ Get one weaver
 * URL `/weavers/:weaver_id`
 
 * Method `GET`
-* URL Params
-None
-* Data Params
-None
+* URL Params: None
+* Data Params: None
 * Success Response
 ```
     Code: 200
@@ -107,18 +101,13 @@ None
 ```
 
 ### Projects
-Returns all projects
-* URL
-/projects
-* Method
-```
-GET
-```
-* URL Params
-None
-* Data Params
-None
+Returns All Projects
+* URL `/projects`
+* Method `GET`
+* URL Params: None
+* Data Params: None
 * Success Response
+```
     Code: 200
     Content:{ 
         {
@@ -137,18 +126,16 @@ None
         weaver_id: 3,
       }
     }
-
+```
 ### Return one project
 Returns one project
 * URL `/projects/project/:project_id`
 * Method  `GET`
-* URL Params
-project_id=[integer]
-* Data Params
-None
-* Success Response
+* URL Params: `project_id=[integer]`
+* Data Params: None
+* Success Response:
+```
     Code: 200
-  ```
     Content:{ 
         {
         id: 2,
@@ -166,18 +153,16 @@ None
         weaver_id: 3,
       }
     }
-    ```
+```
 
 
 ### Get All Projects By Weaver
 Returns all projects by one specific weaver
 * URL `/projects/:weaver_id`
 * Method `GET`
-* URL Params
-weaver_id=[integer]
-* Data Params
-None
-* Success Response
+* URL Params: `weaver_id=[integer]`
+* Data Params: None
+* Success Response:
 ```
     Code: 200
     Content:{ 
@@ -203,10 +188,8 @@ None
 Add a new project to the database
 * URL `/projects`
 * Method `POST`
-* URL Params
-None
-* Data Params
-None
+* URL Params: None
+* Data Params: None
 * Success Response
 ```
     Code: 202
@@ -232,26 +215,25 @@ None
 Edits and Updates an Existing Project
 * URL `/projects/edit/:project_id`
 * Method: `PATCH`
-* URL Params
-project_id = [integer]
-* Data Params
-None
-* Success Response
+* URL Params `project_id = [integer]`
+* Data Params: None
+* Success Response:
+```
     Code: 204 (No Content)
     }
+```
 
 ### Delete Project
 Deletes Existing Project
 * URL `/project/:id`
 * Method `DELETE`
-* URL Params
-id=[integer]
-* Data Params
-None
+* URL Params: `id=[integer]`
+* Data Params: None
 * Success Response:
+```
     Code: 204
     Content: none
-
+```
 
 ## Live App
 [Web Weavers Studio](https://web-weavers-studio-app.now.sh/)
