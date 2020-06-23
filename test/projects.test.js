@@ -53,56 +53,45 @@ describe("GET /projects", () => {
   });
 });
 
-describe(`POST /projects`, () => {
-      const newProject= {
-        id: 2,
-        project_title: "test title",
-        project_description: "test desc",
-        weave_structure: "test structure",
-        warp_material: "test warp mat",
-        warp_size: "test warpsize",
-        weft_material: "test weft mat",
-        weft_size: "test weft size",
-        sett: 5,
-        ppi: 2,
-        size_on_loom: "test size on",
-        size_off_loom: " test size off",
-        weaver_id: 3,
-      }
-      it(`creates a project, responding with 201 and the new project`, function (done)  {
-      return supertest(app)
-          .post('/projects')
-          .send(newProject)
-          .post('/users')
-          .send(newProject)
-          .set('Accept', 'application/json')
-          .expect('Content-Type', /json/)
-          .expect(201)
-          .end((err) => {
-              if (err) return done(err);
-              done();
-          });
-        })
-      })
-  //         .expect(201)
-  //         .expect(res => {
-  //           expect(res.body.id).to.eql(newProject.id)
-  //             expect(res.body.project_title).to.eql(newProject.project_title)
-  //             expect(res.body.project_description).to.eql(newProject.project_description)
-  //             expect(res.body.weave_structure).to.eql(newProject.weave_structure)
-  //             expect(res.body.warp_material).to.eql(newProject.warp_material)
-  //             expect(res.body.weft_material).to.eql(newProject.weft_material)
-  //             expect(res.body.weft_size).to.eql(newProject.weft_size)
-  //             expect(res.body.sett).to.eql(newProject.sett)
-  //             expect(res.body.ppi).to.eql(newProject.ppi)
-  //             expect(res.body.size_on_loom).to.eql(newProject.size_on_loom)
-  //             expect(res.body.size_off_loom).to.eql(newProject.size_off_loom)
-  //             expect(res.body.weaver_id).to.eql(newProject.weaver_id)
-  //         })
-  //         .then(res => 
-  //             supertest(app)
-  //                 .get(`/projects/project/${res.body.project_id}`)
-  //                 .expect(res.body)
-  //         )
-  // })
+// describe(`POST /projects`, () => {
+//       const newProject= {
+//         id: 2,
+//         project_title: "test title",
+//         project_description: "test desc",
+//         weave_structure: "test structure",
+//         warp_material: "test warp mat",
+//         warp_size: "test warpsize",
+//         weft_material: "test weft mat",
+//         weft_size: "test weft size",
+//         sett: 5,
+//         ppi: 2,
+//         size_on_loom: "test size on",
+//         size_off_loom: " test size off",
+//         weaver_id: 3,
+//       }
+//       it(`creates a project, responding with 201 and the new project`, function (done)  {
+//       return supertest(app)
+//           .post('/projects')
+//           .send(newProject)
+//                    .expect(201)
+//           .expect(res => {
+//             expect(res.body.id).to.eql(newProject.id)
+//               expect(res.body.project_title).to.eql(newProject.project_title)
+//               expect(res.body.project_description).to.eql(newProject.project_description)
+//               expect(res.body.weave_structure).to.eql(newProject.weave_structure)
+//               expect(res.body.warp_material).to.eql(newProject.warp_material)
+//               expect(res.body.weft_material).to.eql(newProject.weft_material)
+//               expect(res.body.weft_size).to.eql(newProject.weft_size)
+//               expect(res.body.sett).to.eql(newProject.sett)
+//               expect(res.body.ppi).to.eql(newProject.ppi)
+//               expect(res.body.size_on_loom).to.eql(newProject.size_on_loom)
+//               expect(res.body.size_off_loom).to.eql(newProject.size_off_loom)
+//               expect(res.body.weaver_id).to.eql(newProject.weaver_id)
+//           })
+//           .then(res => 
+//               supertest(app)
+//                   .get(`/projects/project/${res.body.id}`)
+//                   .expect(res.body)
+//           )
+//   })
 // })

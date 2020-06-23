@@ -34,21 +34,13 @@ describe("GET /weavers", () => {
       .expect(200, mockData);
   });
 
-//   it("Given there are weavers in the database associated with that weaver id, responds with 200 and the weavers associated with the weaver id", () => {
-//     const weaver_id = 1;
-//     return supertest(app)
-//       .get(`/weavers/${weaver_id}`)
-//       .expect(200, mockData);
-//   });
-
-//   it("responds with 200 and the weavers associated with the project id", () => {
-//     const project_id = 1;
-//     return supertest(app)
-//       .get(`/weavers/project/${project_id}`)
-//       .expect(200, mockData[0]);
-//   });
+  it("Given there are weavers in the database associated with that  id, responds with 200 and the weaver associated with the weaver id", () => {
+    const weaver_id = 1;
+    return supertest(app)
+      .get(`/weavers/weaver/${weaver_id}`)
+      .expect(200, mockData[0]);
+  }); 
 });
-
 // describe(`POST /weavers`, () => {
 //   it(`creates a project, responding with 201 and the new project`, () => {
 //       const newProject= {
