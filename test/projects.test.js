@@ -20,7 +20,7 @@ const mockData = [{
 }];
 
 //get
-describe("GET /projects", () => {
+describe("GET, PUT, POST, DELETE projects", () => {
   let db;
   before('make knex instance', () => {
       db = knex({
@@ -51,47 +51,51 @@ describe("GET /projects", () => {
       .get(`/projects/project/${project_id}`)
       .expect(200, mockData[0]);
   });
+  
+ 
+  it(`creates a project, responding with 201 and the new project`, function (done)  {
+      const newProject= {
+        id: Math.floor(1000 + Math.random() * 9000),
+        project_title: "test title",
+        project_description: "test desc",
+        weave_structure: "test structure",
+        warp_material: "test warp mat",
+        warp_size: "test warpsize",
+        weft_material: "test weft mat",
+        weft_size: "test weft size",
+        sett: 5,
+        ppi: 2,
+        size_on_loom: "test size on",
+        size_off_loom: " test size off",
+        weaver_id: 1,
+      }
+      
+      supertest(app)
+        .post('/projects')
+        .send(newProject)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) throw err;
+          expect(res.body.project_title).to.eql(newProject.project_title)
+          expect(res.body.project_description).to.eql(newProject.project_description)
+          expect(res.body.weave_structure).to.eql(newProject.weave_structure)
+          expect(res.body.warp_material).to.eql(newProject.warp_material)
+          expect(res.body.weft_material).to.eql(newProject.weft_material)
+          expect(res.body.weft_size).to.eql(newProject.weft_size)
+          expect(res.body.sett).to.eql(newProject.sett)
+          expect(res.body.ppi).to.eql(newProject.ppi)
+          expect(res.body.size_on_loom).to.eql(newProject.size_on_loom)
+          expect(res.body.size_off_loom).to.eql(newProject.size_off_loom)
+          expect(res.body.weaver_id).to.eql(newProject.weaver_id)
+          supertest(app)
+            .delete(`/projects/${res.body.id}`)
+            .expect(204)
+            .end(function (deleteErr, deleteResp) {
+              if (err) throw err;
+              done();
+            });
+        });
+    });
 });
-
-// describe(`POST /projects`, () => {
-//       const newProject= {
-//         id: 2,
-//         project_title: "test title",
-//         project_description: "test desc",
-//         weave_structure: "test structure",
-//         warp_material: "test warp mat",
-//         warp_size: "test warpsize",
-//         weft_material: "test weft mat",
-//         weft_size: "test weft size",
-//         sett: 5,
-//         ppi: 2,
-//         size_on_loom: "test size on",
-//         size_off_loom: " test size off",
-//         weaver_id: 3,
-//       }
-//       it(`creates a project, responding with 201 and the new project`, function (done)  {
-//       return supertest(app)
-//           .post('/projects')
-//           .send(newProject)
-//                    .expect(201)
-//           .expect(res => {
-//             expect(res.body.id).to.eql(newProject.id)
-//               expect(res.body.project_title).to.eql(newProject.project_title)
-//               expect(res.body.project_description).to.eql(newProject.project_description)
-//               expect(res.body.weave_structure).to.eql(newProject.weave_structure)
-//               expect(res.body.warp_material).to.eql(newProject.warp_material)
-//               expect(res.body.weft_material).to.eql(newProject.weft_material)
-//               expect(res.body.weft_size).to.eql(newProject.weft_size)
-//               expect(res.body.sett).to.eql(newProject.sett)
-//               expect(res.body.ppi).to.eql(newProject.ppi)
-//               expect(res.body.size_on_loom).to.eql(newProject.size_on_loom)
-//               expect(res.body.size_off_loom).to.eql(newProject.size_off_loom)
-//               expect(res.body.weaver_id).to.eql(newProject.weaver_id)
-//           })
-//           .then(res => 
-//               supertest(app)
-//                   .get(`/projects/project/${res.body.id}`)
-//                   .expect(res.body)
-//           )
-//   })
-// })
